@@ -44,7 +44,7 @@ Verifikasi PDB Terbuka:
 SHOW PDBS;
 
 5. BUAT USER BARU
-Buat user untuk kebutuhan aplikasi Anda:
+Buat user untuk kebutuhan aplikasi:
 --sql
 CREATE USER project_user IDENTIFIED BY password
 DEFAULT TABLESPACE USERS
@@ -70,7 +70,7 @@ SELECT TABLESPACE_NAME, STATUS FROM DBA_TABLESPACES;
 Buat tablespace baru jika dibutuhkan:
 --sql
 CREATE TABLESPACE app_tbs
-DATAFILE '/opt/oracle/oradata/XEPDB1/app_tbs01.dbf' 
+DATAFILE 'C:\opt\oracle\oradata\XEPDB1\app_tbs01.dbf' 
 SIZE 100M AUTOEXTEND ON NEXT 10M MAXSIZE UNLIMITED;
 
 Berikan default tablespace untuk user:
@@ -78,7 +78,7 @@ Berikan default tablespace untuk user:
 ALTER USER project_user DEFAULT TABLESPACE app_tbs;
 
 7. MENGAKSES DAN MENGUJI KONEKSI
-Cek TNSNAMES.ORA: Pastikan file tnsnames.ora (lokasi default: $ORACLE_HOME/network/admin/tnsnames.ora) sudah mengandung entry untuk XEPDB1:
+Cek TNSNAMES.ORA: Pastikan file tnsnames.ora (lokasi default: $ORACLE_HOME\network\admin\tnsnames.ora) sudah mengandung entry untuk XEPDB1:
 --plaintext
 XEPDB1 =
   (DESCRIPTION =
@@ -112,17 +112,8 @@ SELECT * FROM Test;
 9. OPSI OPSIONAL: KONFIGURASI APLIKASI
 Oracle SQL Developer: Gunakan tool ini untuk GUI akses database.
 DBeaver: Tool alternatif untuk manajemen database.
-Integrasi Aplikasi: Pastikan aplikasi Anda (Java, Python, atau lainnya) menggunakan driver JDBC/ODBC untuk koneksi.
-
-10. OPTIMASI DATABASE XE
-Cek Penggunaan CPU dan Memori:
---sql
-SELECT * FROM V$MEMORY_TARGET_ADVICE;
-
-Optimalkan Performansi Tablespace:
---sql
-ALTER DATABASE DATAFILE '/opt/oracle/oradata/XEPDB1/system01.dbf' RESIZE 500M;
-___________________________________________________________________________________________________________________________________________________________________________________________
+Integrasi Aplikasi: Pastikan aplikasi (Java, Python, atau lainnya) menggunakan driver JDBC/ODBC untuk koneksi.
+_________________________________________________________________________________________________________
 ___________________________________________________________________________________________________________________________________________________________________________________________
 
 LANGKAH-LANGKAH MEMBUAT PLUGGABLE DATABASE (PDB):
@@ -147,7 +138,7 @@ ALTER SESSION SET CONTAINER = CDB$ROOT;
 --Gunakan perintah berikut untuk membuat PDB baru. Ini adalah contoh umum:
 CREATE PLUGGABLE DATABASE XEPDB1
 ADMIN USER pdb_admin IDENTIFIED BY admin_password
-FILE_NAME_CONVERT = ('/u01/app/oracle/oradata/XE/pdbseed/', '/u01/app/oracle/oradata/XE/XEPDB2/');
+FILE_NAME_CONVERT = ('C:\app\oracle\oradata\XE\pdbseed\', '\app\oracle\oradata\XE\XEPDB2\');
 --XEPDB2: Nama PDB baru yang akan dibuat.
 --ADMIN USER pdb_admin: Admin user untuk PDB baru.
 --IDENTIFIED BY admin_password: Password untuk admin user.
@@ -229,6 +220,3 @@ SELECT USERNAME, DEFAULT_TABLESPACE, TEMPORARY_TABLESPACE
 FROM DBA_USERS;
 ___________________________________________________________________________________________________________________________________________________________________________________________
 ___________________________________________________________________________________________________________________________________________________________________________________________
-
-
-
